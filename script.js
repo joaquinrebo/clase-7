@@ -95,13 +95,27 @@ function editarEstudiante(index) {
 const promDiv = document.getElementById("average");
 
 function calcularPromedio() {
+    const totalStudentsDiv = document.getElementById("totalStudents");
+    const studentsLessThan5Div = document.getElementById("studentsLessThan5");
+    const studentsGreaterOrEqual5Div = document.getElementById("studentsGreaterOrEqual5");
+
     if (students.length === 0) {
-        promDiv.innerHTML = "Promedio General del curso: N/A";
+        promDiv.textContent = "Promedio General del curso: N/A";
+        totalStudentsDiv.textContent = "Total de estudiantes: 0";
+        studentsLessThan5Div.textContent = "Estudiantes con nota < 5: 0";
+        studentsGreaterOrEqual5Div.textContent = "Estudiantes con nota ≥ 5: 0";
         return;
     }
+
     const total = students.reduce((acc, student) => acc + student.grade, 0);
     const average = total / students.length;
-    promDiv.innerHTML = `Promedio General del curso: ${average.toFixed(2)}`;
-}
 
-updateTable();
+    const estudiantesMenor5 = students.filter(student => student.grade < 5).length;
+    const estudiantesMayorIgual5 = students.filter(student => student.grade >= 5).length;
+
+    promDiv.textContent = `Promedio General del curso: ${average.toFixed(2)}`;
+    totalStudentsDiv.textContent = `Total de estudiantes: ${students.length}`;
+    studentsLessThan5Div.textContent = `Estudiantes con nota < 5: ${estudiantesMenor5}`;
+    studentsGreaterOrEqual5Div.textContent = `Estudiantes con nota ≥ 5: ${estudiantesMayorIgual5}`;
+}
+    updateTable();
